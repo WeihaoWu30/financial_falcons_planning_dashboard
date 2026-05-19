@@ -5,9 +5,65 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Group{
+   id          Int @id @default(autoincrement())
+   userID      String @unique
+   name        String
+   members     Member[]
+   expenses    Expense[]
+   budgets     Budget[]
+   createdAt   DateTime @default(now())  
+}
+
+model Member{
+   id          Int @id @default(autoincrement())
+   name        String
+   groupID     Int
+   group       Group @relation(fields: [groupID], references: [id])
+   contributions  ExpenseContribution[]
+
+}
+
+model Expense{
+   id          Int @id @default(autoincrement())
+   title       String
+   amount      Float
+   category    ExpenseCategory
+   groupID     Int
+   group       Group @relation(fields: [groupID], references: [id])
+   contributions ExpenseContribution[]
+   createdAt   DateTime @default(now())
+}
+
+enum ExpenseCategory{
+   GROCERIES
+   HOUSEHOLD
+   TRANSPORTATION
+   UTILITIES
+   FURNITURE
+}
+
+model ExpenseContribution {
+  id        Int     @id @default(autoincrement())
+  amount    Float   // how much this member contributed
+  memberId  Int
+  member    Member  @relation(fields: [memberId], references: [id])
+  expenseId Int
+  expense   Expense @relation(fields: [expenseId], references: [id])
+}
+
+model Budget{
+   id          Int @id @default(autoincrement())
+   groupID     Int
+   group       Group @relation(fields: [groupID], references: [id])
+   limit       Float
 }
