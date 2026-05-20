@@ -66,4 +66,7 @@ model Budget{
    groupID     Int
    group       Group @relation(fields: [groupID], references: [id])
    limit       Float
+   month       Int
+   year        Int
+   @@unique([groupID, month, year])
 }
