@@ -58,7 +58,7 @@ export default function Login() {
                         required
                      />
                      <button type="submit">Log In</button>
-                     <p onClick={(e) => { e.stopPropagation(); setAccount(false); }}>Don't have an account? Sign up</p>
+                     <p onClick={(e) => { e.stopPropagation(); setAccount(false); }}>Don&apos;t have an account? Sign up</p>
 
                   </div>
                </form>
