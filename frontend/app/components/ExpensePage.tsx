@@ -68,7 +68,7 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
 
    const { data: expenses } = trpc.expenses.getExpenses.useQuery(
       {
-         groupID: group?.id!,
+         groupID: group!.id,
          category: category,
          month: monthIndex,
          year: selectedYear
