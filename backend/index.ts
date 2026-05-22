@@ -1,20 +1,8 @@
 import "dotenv/config";
 import { createServer } from "http";
 import { createHTTPHandler } from "@trpc/server/adapters/standalone";
-import { router, createContext } from "./trpc"
-import { groupRouter } from "./src/routers/group"
-import { expenseRouter } from "./src/routers/expenses";
-import { budgetRouter } from "./src/routers/budget";
-import { aiRouter } from "./src/routers/ai";
-
-const appRouter = router({
-   group: groupRouter,
-   expenses: expenseRouter,
-   budget: budgetRouter,
-   aiRecommendation: aiRouter
-});
-
-export type AppRouter = typeof appRouter;
+import { createContext } from "./trpc"
+import { appRouter } from "./router"
 
 const handler = createHTTPHandler({ router: appRouter, createContext });
 
