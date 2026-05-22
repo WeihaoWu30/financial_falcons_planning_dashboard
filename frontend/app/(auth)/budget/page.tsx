@@ -30,7 +30,7 @@ export default function BudgetPage() {
   )
 
   const { data: budgets } = trpc.budget.getBudgets.useQuery(
-    { groupID: group!.id },
+    { groupID: group?.id ?? 0 },
     { enabled: !!group?.id }
   )
 

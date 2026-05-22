@@ -43,18 +43,18 @@ export default function Dashboard() {
   )
 
   const { data: membersData } = trpc.group.getMembers.useQuery(
-    { id: group!.id },
+    { id: group?.id ?? 0 },
     { enabled: !!group?.id }
   )
 
   const { data: expenses } = trpc.expenses.getExpensesByMonthYear.useQuery({
-      groupID: group!.id,
+      groupID: group?.id ?? 0,
       month: monthIndex },
       { enabled: !!group?.id }
   )
 
   const { data: budget } = trpc.budget.getBudgetByMonthAndYear.useQuery({
-   groupID: group!.id,
+   groupID: group?.id ?? 0,
    month: monthIndex,
    year: new Date().getFullYear()},
    {enabled: !!group?.id}

@@ -50,7 +50,7 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
 
    const { data: members } = trpc.group.getMembers.useQuery(
       {
-         id: group!.id
+         id: group?.id ?? 0
       },
       { enabled: !!group?.id }
    );
@@ -69,7 +69,7 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
 
    const { data: expenses } = trpc.expenses.getExpenses.useQuery(
       {
-         groupID: group!.id,
+         groupID: group?.id ?? 0,
          category: category,
          month: monthIndex,
          year: selectedYear
