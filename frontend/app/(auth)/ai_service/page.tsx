@@ -40,7 +40,7 @@ export default function AiService() {
     <div className={styles.page}>
       <div className={styles.header}>
         <h1>AI Recommendation</h1>
-        <p>Get personalized financial advice based on your group's spending habits this month.</p>
+        <p>Get personalized financial advice based on your group&apos;s spending habits this month.</p>
       </div>
 
       <div className={styles.infoCards}>
