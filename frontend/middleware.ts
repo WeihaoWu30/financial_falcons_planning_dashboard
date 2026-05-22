@@ -1,10 +1,24 @@
-import { type NextRequest } from 'next/server'
-import { updateSession } from './utils/supabase/middleware'
+import { type NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'nodejs'
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  const authCookie =
+    request.cookies.get('sb-access-token') ??
+    [...request.cookies.getAll()].find(c => c.name.includes('auth-token'))
+
+  const isLoggedIn = !!authCookie
+  const isLoginPage = pathname.startsWith('/login')
+
+  if (!isLoggedIn && !isLoginPage) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  if (isLoggedIn && isLoginPage) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {
