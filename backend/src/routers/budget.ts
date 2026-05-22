@@ -39,4 +39,21 @@ export const budgetRouter = router({
          });
       }),
 
+   updateBudget: protectedProcedure
+      .input(z.object({ groupID: z.number(), month: z.number(), year: z.number(), newLimit: z.number() }))
+      .mutation(async ({ input }) => {
+         return await prisma.budget.update({
+            where: {
+               groupID_month_year: {
+                  groupID: input.groupID,
+                  month: input.month,
+                  year: input.year
+               }
+            },
+            data: {
+               limit: input.newLimit
+            }
+         })
+      })
+
 });

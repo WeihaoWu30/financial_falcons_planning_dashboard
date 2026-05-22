@@ -34,7 +34,13 @@ export default function BudgetPage() {
     { enabled: !!group?.id }
   )
 
+  const [editingBudget, setEditingBudget] = useState<NonNullable<typeof budgets>[number] | null>(null)
+
   const addBudget = trpc.budget.addBudget.useMutation({
+    onSuccess: () => utils.budget.getBudgets.invalidate()
+  })
+
+  const updateBudget = trpc.budget.updateBudget.useMutation({
     onSuccess: () => utils.budget.getBudgets.invalidate()
   })
 
@@ -95,14 +101,48 @@ export default function BudgetPage() {
         </div>
       )}
 
+      {editingBudget && (
+        <div className={styles.overlay}>
+          <div className={styles.modal}>
+            <h2>Edit Budget</h2>
+            <form onSubmit={async (e) => {
+              e.preventDefault()
+              await updateBudget.mutateAsync({
+                groupID: editingBudget.groupID,
+                month: editingBudget.month,
+                year: editingBudget.year,
+                newLimit: editingBudget.limit
+              })
+              setEditingBudget(null)
+            }}>
+              <label>Budget Limit ($)</label>
+              <input
+                type="number"
+                value={editingBudget.limit}
+                onChange={e => setEditingBudget(prev => prev ? { ...prev, limit: parseFloat(e.target.value) } : null)}
+                placeholder="0.00"
+                required
+              />
+              <div className={styles.modalButtons}>
+                <button type="button" className={styles.cancelBtn} onClick={() => setEditingBudget(null)}>Cancel</button>
+                <button type="submit" className={styles.submitBtn} disabled={updateBudget.isPending}>
+                  {updateBudget.isPending ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <div className={styles.budgetList}>
         {(budgets ?? []).map(budget => (
           <div key={budget.id} className={styles.budgetCard}>
             <div className={styles.budgetMonth}>
               {months[budget.month - 1]} {budget.year}
             </div>
-            <div className={styles.budgetLimit}>
-              ${budget.limit.toFixed(2)}
+            <div className={styles.budgetRight}>
+              <div className={styles.budgetLimit}>${budget.limit.toFixed(2)}</div>
+              <button className={styles.editBtn} onClick={() => setEditingBudget(budget)}>Edit</button>
             </div>
           </div>
         ))}
