@@ -77,9 +77,20 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
       { enabled: !!group?.id }
    )
 
+   const [editingExpense, setEditingExpense] = useState<NonNullable<typeof expenses>[number] | null>(null)
+
    const addExpense = trpc.expenses.addExpense.useMutation({
-      onSuccess: ()=> utils.expenses.getExpenses.invalidate()
+      onSuccess: () => utils.expenses.getExpenses.invalidate()
    });
+
+
+   const deleteExpense = trpc.expenses.deleteExpense.useMutation({
+      onSuccess: () => utils.expenses.getExpenses.invalidate()
+   })
+
+   const updateExpense = trpc.expenses.updateExpense.useMutation({
+      onSuccess: () => utils.expenses.getExpenses.invalidate()
+   })
 
 
    const handleContributionChange = (memberID: number, value: string) => {
@@ -167,6 +178,40 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
             </div>
          )}
 
+         {editingExpense && (
+            <div className={styles.overlay}>
+               <div className={styles.modal}>
+                  <h2>Add {categoryLabel} Expense</h2>
+                  <form onSubmit={async (e) => {e.preventDefault(); await updateExpense.mutateAsync({title: editingExpense.title, amount: editingExpense.amount, id: editingExpense.id, contributions:  editingExpense.contributions})}}>
+                     <label>Title</label>
+                     <input value={editingExpense.title} onChange={e => setEditingExpense(prev => prev ? {...prev, title: e.target.value} : null)} required />
+
+                     <label>Total Amount ($)</label>
+                     <input type="number" value={editingExpense.amount} onChange={e => setEditingExpense(prev => prev ? {...prev, amount: parseFloat(e.target.value)}:null)} placeholder="0.00" required />
+
+                     <label>Contributions per member</label>
+                     {(members?.members ?? []).map(member => (
+                        <div key={member.id} className={styles.contributionRow}>
+                           <span>{member.name}</span>
+                           <input
+                              type="number"
+                              value={editingExpense.contributions.find(c => c.memberId === member.id)?.amount ?? 0}
+                              onChange={e => setEditingExpense(prev => prev ? {...prev, contributions: prev.contributions.map(c =>
+                                 c.memberId === member.id ? {...c, amount: parseFloat(e.target.value) || 0} : c)
+                              }:null)}
+                           />
+                        </div>
+                     ))}
+
+                     <div className={styles.modalButtons}>
+                        <button type="button" className={styles.cancelBtn} onClick={() => setEditingExpense(null)}>Cancel</button>
+                        <button type="submit" className={styles.submitBtn}>Add Expense</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         )}
+
          <div className={styles.expenseList}>
             {(expenses ?? []).map(expense => (
                <div key={expense.id} className={styles.expenseCard}>
@@ -175,7 +220,11 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
                         <p className={styles.expenseTitle}>{expense.title}</p>
                         <p className={styles.expenseDate}>{new Date(expense.createdAt).toLocaleDateString()}</p>
                      </div>
-                     <p className={styles.expenseAmount}>${expense.amount.toFixed(2)}</p>
+                     <div className={styles.expenseRight}>
+                        <p className={styles.expenseAmount}>${expense.amount.toFixed(2)}</p>
+                        <button className={styles.editBtn} onClick={() => setEditingExpense(expense)}>Edit</button>
+                        <button className={styles.deleteBtn} onClick={() => deleteExpense.mutate({ id: expense.id })}>Delete</button>
+                     </div>
                   </div>
                   <div className={styles.contributions}>
                      {expense.contributions.map(c => {
