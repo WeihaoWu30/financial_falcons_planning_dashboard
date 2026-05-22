@@ -42,21 +42,21 @@ export default function Dashboard() {
   )
 
   const { data: membersData } = trpc.group.getMembers.useQuery(
-    { id: group?.id! },
+    { id: group!.id },
     { enabled: !!group?.id }
   )
 
   const { data: expenses } = trpc.expenses.getExpensesByMonthYear.useQuery({
-      groupID: group?.id!,
+      groupID: group!.id,
       month: monthIndex },
       { enabled: !!group?.id }
   )
 
   const { data: budget } = trpc.budget.getBudgetByMonthAndYear.useQuery({
-   groupID: group?.id!,
+   groupID: group!.id,
    month: monthIndex,
    year: new Date().getFullYear()},
-   {enabled: !!group?.id!}
+   {enabled: !!group?.id}
   )
 
 
@@ -90,7 +90,7 @@ export default function Dashboard() {
       <div className={styles.header_row}>
         <div>
           <h1>Dashboard Overview</h1>
-          <div className={styles.headerSubtitle}>Here's your financial overview for today.</div>
+          <div className={styles.headerSubtitle}>Here&apos;s your financial overview for today.</div>
         </div>
         <div className={styles.monthBtnWrapper}>
           <button className={styles.monthBtn} onClick={() => setShowDropdown(!showDropdown)}>
