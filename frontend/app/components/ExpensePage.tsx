@@ -57,9 +57,9 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
 
    const memberList = members?.members ?? []
 
-   // eslint-disable-next-line react-hooks/set-state-in-effect
    useEffect(() => {
       if (members?.members && members.members.length > 0) {
+         // eslint-disable-next-line react-hooks/set-state-in-effect
          setContributions(members.members.map(member => ({
             memberID: member.id,
             amount: 0
