@@ -1,0 +1,102 @@
+.page {
+   display: flex;
+   width: 100vw;
+   height: 100vh;
+   background-color: #141414;
+}
+
+.container {
+   display: flex;
+   width: 100%;
+   height: 100%;
+}
+
+.panel {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   transition: flex 0.5s ease-in-out, background-color 0.5s ease-in-out, filter 0.5s ease-in-out;
+}
+
+.active {
+   flex: 1.5;
+   background-color: #1e1e2e;
+   filter: brightness(1);
+}
+
+.inactive {
+   flex: 0.5;
+   background-color: #141414;
+   filter: brightness(0.35);
+}
+
+.login {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   width: 340px;
+}
+
+.login h1 {
+   color: #ffffff;
+   font-size: 24px;
+   font-weight: 600;
+   margin-bottom: 4px;
+}
+
+.login p {
+   color: #666666;
+   font-size: 13px;
+   font-weight: 500;
+   text-align: center;
+   cursor: pointer;
+   transition: color 0.2s;
+}
+
+.login p:hover {
+   color: #00c9d8;
+}
+
+.login label {
+   color: #888888;
+   font-size: 13px;
+   font-weight: 500;
+}
+
+.login input {
+   background-color: #252535;
+   border: 1px solid #2e2e42;
+   border-radius: 8px;
+   color: #ffffff;
+   font-size: 14px;
+   padding: 10px 14px;
+   outline: none;
+   transition: border-color 0.2s;
+}
+
+.login input:focus {
+   border-color: #00c9d8;
+}
+
+.login input::placeholder {
+   color: #444455;
+}
+
+.login button {
+   margin-top: 8px;
+   background-color: #00c9d8;
+   color: #0f0f0f;
+   border: none;
+   border-radius: 8px;
+   padding: 11px;
+   font-size: 14px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: background-color 0.2s;
+}
+
+.login button:hover {
+   background-color: #00aab8;
+}

@@ -262,6 +262,12 @@
   height: 90px;
 }
 
+.avatarStack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .avatarsCard {
   background-color: #181a1e;
   border: 1px solid #22252a;
@@ -290,6 +296,30 @@
   margin-left: 0px;
 }
 
+.dropdown {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  background-color: #181a1e;
+  border: 1px solid #22252a;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 100;
+  min-width: 160px;
+}
+
+.dropdownItem {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.dropdownItem:hover {
+  background-color: #22252a;
+}
+
 .plusBtn {
   width: 46px;
   height: 46px;
@@ -298,4 +328,125 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
+}
+
+.headerSubtitle {
+  color: #666e7a;
+  font-size: 14px;
+}
+
+.monthBtnWrapper {
+  position: relative;
+}
+
+.cardLabel {
+  color: #666e7a;
+  font-size: 13px;
+}
+
+.cardSubtitle {
+  color: #4a515c;
+  font-size: 13px;
+}
+
+.chartTitle {
+  font-size: 22px;
+  margin: 0;
+}
+
+.legendEmoji {
+  font-size: 20px;
+}
+
+.legendSubtitle {
+  font-size: 12px;
+  color: #666e7a;
+}
+
+.legendDivider {
+  height: 1px;
+  background: #222426;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.savingsLabel {
+  font-size: 13px;
+  color: #666e7a;
+}
+
+.membersLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a515c;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.addMemberOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.addMemberModal {
+  background: #181a1e;
+  border: 1px solid #22252a;
+  border-radius: 20px;
+  padding: 32px;
+  width: 360px;
+}
+
+.addMemberTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+}
+
+.addMemberInput {
+  width: 100%;
+  background: #1a1c1e;
+  border: 1px solid #2c3036;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.addMemberButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.addMemberCancelBtn {
+  background: transparent;
+  color: #666e7a;
+  border: 1px solid #2c3036;
+  padding: 10px 20px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+}
+
+.addMemberSubmitBtn {
+  background: #38bdf8;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
 }

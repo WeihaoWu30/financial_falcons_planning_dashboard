@@ -2,6 +2,11 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { createClient } from "@supabase/supabase-js";
 import type { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
 export const createContext = ({ req }: CreateHTTPContextOptions) => {
   const token = req.headers.authorization?.replace("Bearer ", "");
   return { token };
@@ -13,11 +18,6 @@ const t = initTRPC.context<Context>().create();
 
 const isAuthed = t.middleware(async ({ ctx, next }) => {
   if (!ctx.token) throw new TRPCError({ code: "UNAUTHORIZED" });
-
-  const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
 
   const { data, error } = await supabase.auth.getUser(ctx.token);
   if (error || !data.user) throw new TRPCError({ code: "UNAUTHORIZED" });
