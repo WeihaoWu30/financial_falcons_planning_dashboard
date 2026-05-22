@@ -50,13 +50,14 @@ export default function ExpensePage({ category, categoryLabel }: Props) {
 
    const { data: members } = trpc.group.getMembers.useQuery(
       {
-         id: group?.id!
+         id: group!.id
       },
       { enabled: !!group?.id }
    );
 
    const memberList = members?.members ?? []
 
+   // eslint-disable-next-line react-hooks/set-state-in-effect
    useEffect(() => {
       if (members?.members && members.members.length > 0) {
          setContributions(members.members.map(member => ({

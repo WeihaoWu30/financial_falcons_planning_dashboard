@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { router, protectedProcedure } from "../../trpc.js"
-import { prisma } from "../../prisma.js"
+import { router, protectedProcedure } from "../../trpc"
+import { prisma } from "../../prisma"
 
 export const expenseRouter = router({
 
