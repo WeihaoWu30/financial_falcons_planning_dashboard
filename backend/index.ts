@@ -1,11 +1,11 @@
 import "dotenv/config";
 import { createServer } from "http";
 import { createHTTPHandler } from "@trpc/server/adapters/standalone";
-import { router, createContext } from "./trpc.js"
-import { groupRouter } from "./src/routers/group.js"
-import { expenseRouter } from "./src/routers/expenses.js";
-import { budgetRouter } from "./src/routers/budget.js";
-import { aiRouter } from "./src/routers/ai.js";
+import { router, createContext } from "./trpc"
+import { groupRouter } from "./src/routers/group"
+import { expenseRouter } from "./src/routers/expenses";
+import { budgetRouter } from "./src/routers/budget";
+import { aiRouter } from "./src/routers/ai";
 
 const appRouter = router({
    group: groupRouter,
