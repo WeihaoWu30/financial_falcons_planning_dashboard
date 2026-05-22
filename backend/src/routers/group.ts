@@ -12,7 +12,7 @@ export const groupRouter = router({
          })
       }),
 
-   create: publicProcedure
+   create: protectedProcedure
       .input(z.object({name: z.string(), userID: z.string()}))
       .mutation(async ({input }) =>{
          return await prisma.group.create({

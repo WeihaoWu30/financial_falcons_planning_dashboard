@@ -41,6 +41,8 @@ model Expense{
    groupID     Int
    group       Group @relation(fields: [groupID], references: [id])
    contributions ExpenseContribution[]
+   month       Int
+   year        Int
    createdAt   DateTime @default(now())
 }
 
