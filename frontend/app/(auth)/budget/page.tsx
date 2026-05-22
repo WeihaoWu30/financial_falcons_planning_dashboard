@@ -1,4 +1,5 @@
 'use client'
+export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import styles from './page.module.css'
 import { trpc } from '@/utils/trpc'
@@ -29,7 +30,7 @@ export default function BudgetPage() {
   )
 
   const { data: budgets } = trpc.budget.getBudgets.useQuery(
-    { groupID: group?.id! },
+    { groupID: group?.id ?? 0 },
     { enabled: !!group?.id }
   )
 
