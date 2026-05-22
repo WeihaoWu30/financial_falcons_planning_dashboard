@@ -1,4 +1,5 @@
 'use client'
+export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import styles from './page.module.css'
 import { trpc } from '@/utils/trpc'
